@@ -58,6 +58,28 @@
       };
     }
 
+		function callme() {
+		    const images = document.getElementsByTagName("img");
+		    let arr = []
+		    for(let i = 0 ; i < images.length; i++){
+		        arr.push(images[i])
+		    }
+		    const activeNotAppliedImages = arr.filter(image => {
+		        return !image.className.split(" ").includes("active")
+		    })
+		    const visibleImages =  activeNotAppliedImages.filter((image) => {
+		        const rect = image.getBoundingClientRect();
+		        return rect.top >= 0 && rect.top <= window.innerHeight - 400;
+		    })  
+		    visibleImages.forEach((image) => {
+		        image.className = image.className + " active";
+		    })
+		}
+
+		const callback = debounce(callme)
+
+		  window.addEventListener("scroll", callback)
+
   </script>
 
   <style>
